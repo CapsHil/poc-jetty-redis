@@ -1,0 +1,25 @@
+# docker run -d -p 80:8080 -p 443:8443 jetty
+version: '3'
+services:
+    redis:
+        container_name: redis   
+        build: ./redis/
+        ports:
+            - "6379:6379"
+    jetty_1:
+        container_name: jetty_backed_redis
+        build: ./jetty/
+        depends_on:
+            - redis
+        tty: true
+        ports: 
+            - "8080:8080"
+            - "443:8443"
+    haproxy:
+        container_name: haproxy_load_balancer
+        build: ./haproxy/
+        depends_on:
+            - redis
+            - jetty_1 
+        volumes:
+            - ./haproxy/conf:/usr/local/etc/haproxy
