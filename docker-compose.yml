@@ -6,20 +6,45 @@ services:
         build: ./redis/
         ports:
             - "6379:6379"
+
     jetty_1:
-        container_name: jetty_backed_redis
-        build: ./jetty/
+        container_name: jetty_1
+        hostname: jetty_1
+        image: jetty:9.3.20
         depends_on:
             - redis
         tty: true
-        ports: 
-            - "8080:8080"
-            - "443:8443"
+        links:
+            - redis
+        volumes:
+            - ./jetty/webapps:/var/lib/jetty/webapps
+#    ports: 
+#            - "443:8443"
+#
+    jetty_2:
+        container_name: jetty_2
+        hostname: jetty_2
+        build: ./jetty/
+        depends_on:
+            - redis
+        links:
+            - redis
+        tty: true
+        volumes:
+            - ./jetty/webapps:/var/lib/jetty/webapps
+#        ports:
+#            - "8081:8080"
+#            - "444:8443"
+
     haproxy:
-        container_name: haproxy_load_balancer
-        build: ./haproxy/
+        container_name: haproxy
+        image: haproxy
         depends_on:
             - redis
             - jetty_1 
+            - jetty_2
         volumes:
             - ./haproxy/conf:/usr/local/etc/haproxy
+        ports:
+            - "8080:8080"
+            - "8082:8082"
