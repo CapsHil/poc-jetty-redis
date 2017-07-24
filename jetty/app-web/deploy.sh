@@ -20,5 +20,5 @@
 set -o nounset                              # Treat unset variables as an error
 
 mvn clean package
-cp ./target/app.jar ../ext/
+cp ./target/app.war ../webapps/
 

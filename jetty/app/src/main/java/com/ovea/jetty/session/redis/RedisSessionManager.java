@@ -319,7 +319,7 @@ public final class RedisSessionManager extends SessionManagerSkeleton<RedisSessi
 
         @Override
         public Set<String> getNames() {
-            return null;
+            return (Set<String>) redisMap.values();
         }
 
         @Override

@@ -80,6 +80,7 @@ com/ovea/jetty/session/SessionIdManagerSkeleton$2$1.class
 com/ovea/jetty/session/serializer/jboss/serial/classmetamodel/ClassMetaDataSlot.class
 com/ovea/jetty/session/serializer/jboss/serial/finalcontainers/DoubleContainer.class
 com/ovea/jetty/session/serializer/jboss/serial/objectmetamodel/ObjectsCache$JBossSeralizationOutputInterface.class
+com/ovea/jetty/session/SessionIdManagerSkeleton$3.class
 com/ovea/jetty/session/serializer/jboss/serial/classmetamodel/ClassMetamodelFactory$1.class
 com/ovea/jetty/session/serializer/jboss/serial/io/MarshalledObject.class
 com/ovea/jetty/session/redis/RedisSessionManager.class

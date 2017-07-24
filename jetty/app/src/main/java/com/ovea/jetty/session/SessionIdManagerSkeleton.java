@@ -146,12 +146,12 @@ public abstract class SessionIdManagerSkeleton extends AbstractSessionIdManager 
         if (sessions.containsKey(clusterId)) {
             sessions.remove(clusterId);
             deleteClusterId(clusterId);
-//            forEachSessionManager(new SessionManagerCallback() {
-//                @Override
-//                public void execute(SessionManagerSkeleton sessionManager) {
-//                    sessionManager.invalidateSession(clusterId);
-//                }
-//            });
+            forEachSessionManager(new SessionManagerCallback() {
+                @Override
+                public void execute(SessionManagerSkeleton sessionManager) {
+                    sessionManager.invalidateSession(clusterId);
+                }
+            });
         }
     }
 

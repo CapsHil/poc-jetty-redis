@@ -15,6 +15,7 @@
  */
 package com.ovea.jetty.session;
 
+import com.ovea.jetty.session.redis.RedisSessionManager;
 import org.eclipse.jetty.server.session.AbstractSession;
 import org.eclipse.jetty.server.session.AbstractSessionManager;
 import org.eclipse.jetty.util.LazyList;
@@ -25,12 +26,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
+import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 import static java.lang.Math.round;
 
 /**
@@ -67,10 +68,14 @@ public abstract class SessionManagerSkeleton<T extends SessionManagerSkeleton.Se
     @Override
     protected final void addSession(AbstractSession session) {
         if (isRunning()) {
-            @SuppressWarnings({"unchecked"}) T sessionSkeleton = (T) session;
+            System.out.println("Session is : " + session);
+            T sessionSkeleton = (T) session;
+            System.out.println("SessionSkeleton is : " + sessionSkeleton.getClusterId());
             String clusterId = getClusterId(session);
+            System.out.println("ClusterId is : " + clusterId);
             sessions.put(clusterId, sessionSkeleton);
-            sessionSkeleton.willPassivate();
+            System.out.println("Sessions are : " + sessions);
+//            sessionSkeleton.willPassivate();
             storeSession(sessionSkeleton);
             sessionSkeleton.didActivate();
         }
@@ -84,7 +89,7 @@ public abstract class SessionManagerSkeleton<T extends SessionManagerSkeleton.Se
         if (removed) {
             _sessionsStats.decrement();
             _sessionTimeStats.set(round((System.currentTimeMillis() - session.getCreationTime()) / 1000.0));
-//            _sessionIdManager.removeSession(session);
+            _sessionIdManager.removeSession(session);
             if (invalidate)
                 _sessionIdManager.invalidateAll(session.getClusterId());
             if (invalidate && _sessionListeners != null) {
@@ -117,6 +122,12 @@ public abstract class SessionManagerSkeleton<T extends SessionManagerSkeleton.Se
     public final SessionManagerSkeleton.SessionSkeleton getSession(String clusterId) {
         synchronized (sessions) {
             T current = sessions.get(clusterId);
+            System.out.println("SESSION is : " + current);
+//            if(current == null) {
+//                sessions.putIfAbsent("clusterId", current);
+//                current = sessions.get(clusterId);
+//                System.out.println("SESSION is now : " + current);
+//            }
             T loaded = loadSession(clusterId, current);
             if (loaded != null) {
                 sessions.put(clusterId, loaded);

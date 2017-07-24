@@ -18,13 +18,12 @@ services:
             - redis
         volumes:
             - ./jetty/webapps:/var/lib/jetty/webapps
-#    ports: 
-#            - "443:8443"
-#
+            - ./jetty/ext:/usr/local/jetty/lib/ext
+
     jetty_2:
         container_name: jetty_2
         hostname: jetty_2
-        build: ./jetty/
+        image: jetty:9.3.20
         depends_on:
             - redis
         links:
@@ -32,9 +31,7 @@ services:
         tty: true
         volumes:
             - ./jetty/webapps:/var/lib/jetty/webapps
-#        ports:
-#            - "8081:8080"
-#            - "444:8443"
+            - ./jetty/ext:/usr/local/jetty/lib/ext
 
     haproxy:
         container_name: haproxy
