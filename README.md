@@ -31,12 +31,23 @@ The Jetty folder inside this repository contains the following files and folders
 ### app-web
 
 #### webapps
-A dummy Java web session demo. Useless except for the demo.
+A dummy Java web session demo. Useless except for the demo.  
 
 #### ext
-Jar files to be copied in the jetty lib/ext folder to achieve Redis session management.
+Jar files to be copied in the jetty lib/ext folder to achieve Redis session management.  
 
 ### app
-This is the Java code required to store Jetty sessions inside Redis.
-Should be built and copied to Jetty server.
-As shown this code is very simple and does not involve much dependencies.
+This is the Java code required to store Jetty sessions inside Redis.  
+Should be built and copied to Jetty server.  
+As shown this code is very simple and does not involve much dependencies.  
+
+## Testing
+
+Deploying to production ready servers is far more simple:  
+- compile with maven (mvn clean package) inside the app folder  
+- grab the generated jar and copy into your Jetty lib/ext folder  
+- copy the required jars into this folder too  
+
+Have fun with sessions stored on Redis.  
+As usual the redis-cli tools should be useful to show sessionss tored inside your Redis server.  
+
