@@ -1,11 +1,13 @@
-# poc-jetty-redis
+# Iki - Jetty-Redis session management
 
-Jetty -> app : Code Java
+Jetty -> app : Java code
 
 Jetty -> app-web : conf JSX/XML
 
-Jetty -> ext : Jar chargés par Jetty au démarrage
+Jetty -> ext : jars needed by Jetty at startup
 
-Build && Deploy (app) : `jetty/app/deploy.sh`
+Build && Deploy (app) : `jetty/app/deploy.sh` && restart containers
 
-Pour run le tout : `docker-compose up`
+Build && Deploy (app-web) : `jetty/app-web/deploy.sh`
+
+Run : `docker-compose up`
