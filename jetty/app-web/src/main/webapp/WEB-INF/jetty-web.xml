@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN" "http://www.eclipse.org/jetty/configure.dtd">
+
+<Configure id="webAppContext" class="org.eclipse.jetty.webapp.WebAppContext">
+
+    <Set name="contextPath">/app</Set>
+
+    <!--
+        configure session clustering
+    -->
+    <Set name="sessionHandler">
+        <New class="org.eclipse.jetty.server.session.SessionHandler">
+            <Arg>
+                <New class="org.eclipse.jetty.RedisSessionManager">
+                </New>
+            </Arg>
+        </New>
+    </Set>
+
+</Configure>

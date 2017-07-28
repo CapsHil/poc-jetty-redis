@@ -1,0 +1,7 @@
+<!DOCTYPE Configure PUBLIC "-//Jetty//Configure//EN"
+"http://www.eclipse.org/jetty/configure_9_3.dtd">
+
+<Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <Set name="contextPath">/app</Set>
+    <Set name="war"><Property name="jetty.webapps" default="."/>/app.war</Set>
+</Configure>
